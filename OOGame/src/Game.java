@@ -1,7 +1,11 @@
-import javax.swing.*;
-
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /* This class is the main System level class which creates all the objects 
  * representing the game logic (model) and the panel for user interaction. 
@@ -18,6 +22,7 @@ public class Game extends JFrame {
 	private JButton right = new JButton("right");
 	private JButton start = new JButton("start");
 	private JLabel mLabel = new JLabel("Time Remaining : " + TIMEALLOWED);
+	private JLabel sLabel = new JLabel("      Current Score: ");
 
 	private Grid grid;
 	private Player player;
@@ -47,6 +52,7 @@ public class Game extends JFrame {
 		panel.add(right);
 		panel.add(start);
 		panel.add(mLabel);
+		panel.add(sLabel);
 
 		// add Action listeners to all button events
 		up.addActionListener(bp);
@@ -109,23 +115,39 @@ public class Game extends JFrame {
 	}
 
 	static JFrame frame = new JFrame("New Frame");
-	
-	
-	public static void main(String args[]) throws Exception {
-		String userinputname = null;
-		String passwordinput = null;
-		int check = 0;
 
-		while (check == 0) {
-			userinputname = JOptionPane.showInputDialog("Please Enter a valid username");
-			passwordinput = JOptionPane.showInputDialog("Please Enter a valid password");
-			if (userinputname.equals(userName) && passwordinput.equals(password)) {
-				check++;
-			} else {
-				JOptionPane.showMessageDialog(frame, "The entered Username or Password is incorrect! Please re-enter");
-			}
+	public void keyPressed(KeyEvent event) {
+		if (event.getKeyCode() == KeyEvent.VK_F5)
+			System.out.println("F5 pressed");
+	}
+
+	public void keyReleased(KeyEvent event) {
+		// TODO Auto-generated method stub
+	}
+
+	void keyTyped(KeyEvent event) {
+		if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+			player.setDirection('L');
 		}
-		
+		if (event.getKeyCode() == KeyEvent.VK_UP) {
+			player.setDirection('U');
+		}
+		if (event.getKeyCode() == KeyEvent.VK_DOWN) {
+			player.setDirection('D');
+		}
+		if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+			player.setDirection('R');
+		}
+	}
+
+	public static void main(String args[]) throws Exception {
+		try {
+			Login window = new Login();
+			window.open();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		Game game = new Game();
 		game.setTitle("Monster Chase");
 		game.setSize(700, 700);

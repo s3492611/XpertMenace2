@@ -44,20 +44,7 @@ public class BoardPanel extends JPanel implements ActionListener {
 
 	}
 
-	 void keyTyped(KeyEvent event) {
-		if (event.getKeyCode() == KeyEvent.VK_LEFT) {
-			player.setDirection('L');
-		}
-		if (event.getKeyCode() == KeyEvent.VK_UP) {
-			player.setDirection('U');
-		}
-		if (event.getKeyCode() == KeyEvent.VK_DOWN) {
-			player.setDirection('D');
-		}
-		if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
-			player.setDirection('R');
-		}
-	}
+	
 
 	/* returns the x coordinate based on left margin and cell width */
 	private int xCor(int col) {
