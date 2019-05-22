@@ -1,4 +1,6 @@
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
@@ -141,12 +143,14 @@ public class Game extends JFrame {
 	}
 
 	public static void main(String args[]) throws Exception {
-		try {
-			Login window = new Login();
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+
+			try {
+				Login window = new Login();
+				window.open();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
 
 		Game game = new Game();
 		game.setTitle("Monster Chase");
