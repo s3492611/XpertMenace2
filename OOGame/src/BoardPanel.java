@@ -30,7 +30,6 @@ public class BoardPanel extends JPanel implements ActionListener {
 
 	/* responds to various button clicked messages */
 	public void actionPerformed(ActionEvent e) {
-		
 		if (((JButton) e.getSource()).getText().compareTo("up") == 0)
 			player.setDirection('U');
 		else if (((JButton) e.getSource()).getText().compareTo("down") == 0)
@@ -41,6 +40,8 @@ public class BoardPanel extends JPanel implements ActionListener {
 			player.setDirection('R');
 		else if (((JButton) e.getSource()).getText().compareTo("start") == 0)
 			player.setReady(true);
+		else if (((JButton) e.getSource()).getText().compareTo("Pause") == 0)
+			player.setReady(false);
 
 	}
 
@@ -67,7 +68,7 @@ public class BoardPanel extends JPanel implements ActionListener {
 		for (int i = 0; i < cells.length; i++) {
 			cell = cells[i];
 			if (cell.col % 5 == 0 && cell.row % 5 == 0)
-				gr.setColor(Color.cyan);
+				gr.setColor(Color.GREEN);
 			else
 				gr.setColor(Color.white);
 			gr.fillRect(xCor(cell.col), yCor(cell.row), CELLWIDTH, CELLHEIGHT);
@@ -75,16 +76,16 @@ public class BoardPanel extends JPanel implements ActionListener {
 			gr.drawRect(xCor(cell.col), yCor(cell.row), CELLWIDTH, CELLHEIGHT);
 		}
 		cell = player.getCell();
-		gr.setColor(Color.red);
+		gr.setColor(Color.blue);
 		gr.fillOval(xCor(cell.col) + CELLWIDTH / 8, yCor(cell.row) + CELLWIDTH / 8, CELLWIDTH * 3 / 4,
 				CELLHEIGHT * 3 / 4);
-		gr.setColor(Color.white);
+		gr.setColor(Color.LIGHT_GRAY);
 		gr.drawString("P", xCor(cell.col) + CELLWIDTH / 3, yCor(cell.row) + 2 * CELLWIDTH / 3);
 
 		if (monster.viewable()) {
 			cell = monster.getCell();
-			gr.setColor(Color.black);
-			gr.fillRect(xCor(cell.col), yCor(cell.row), CELLWIDTH, CELLHEIGHT);
+			gr.setColor(Color.red);
+			gr.fillOval(xCor(cell.col), yCor(cell.row), CELLWIDTH, CELLHEIGHT);
 			gr.setColor(Color.white);
 			gr.drawString("M", xCor(cell.col) + CELLWIDTH / 3, yCor(cell.row) + 2 * CELLWIDTH / 3);
 		}

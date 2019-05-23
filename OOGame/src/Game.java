@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,25 +15,22 @@ import javax.swing.JPanel;
  * It also implements the main game loop 
  */
 
-public class Game extends JFrame {
+public class Game extends JFrame implements KeyListener {
 
 	private final int TIMEALLOWED = 100;
-
+	private int Score = 0;
 	private JButton up = new JButton("up");
 	private JButton down = new JButton("down");
 	private JButton left = new JButton("left");
 	private JButton right = new JButton("right");
 	private JButton start = new JButton("start");
 	private JLabel mLabel = new JLabel("Time Remaining : " + TIMEALLOWED);
-	private JLabel sLabel = new JLabel("      Current Score: ");
+	private JLabel sLabel = new JLabel("      Current Score: " + Score);
 
 	private Grid grid;
 	private Player player;
 	private Monster monster;
 	private BoardPanel bp;
-
-	private static String userName = "Username";
-	private static String password = "password";
 
 	// :)
 	/*
@@ -45,7 +43,7 @@ public class Game extends JFrame {
 		player = new Player(grid, 0, 0);
 		monster = new Monster(grid, player, 5, 5);
 		bp = new BoardPanel(grid, player, monster);
-
+		addKeyListener(this);
 		// Create a separate panel and add all the buttons
 		JPanel panel = new JPanel();
 		panel.add(up);
@@ -56,6 +54,7 @@ public class Game extends JFrame {
 		panel.add(mLabel);
 		panel.add(sLabel);
 
+	
 		// add Action listeners to all button events
 		up.addActionListener(bp);
 		down.addActionListener(bp);
@@ -89,7 +88,9 @@ public class Game extends JFrame {
 		while (!player.isReady())
 			delay(100);
 		do {
-
+			if (player.isReady() == true) {
+				start.setText("Pause");
+			}
 			Cell newPlayerCell = player.move();
 			if (newPlayerCell == monster.getCell())
 				break;
@@ -102,6 +103,7 @@ public class Game extends JFrame {
 			// update time and repaint
 			time++;
 			mLabel.setText("Time Remaining : " + (TIMEALLOWED - time));
+			sLabel.setText("      Current Score: " + (Score + (time * 500)));
 			delay(1000);
 			bp.repaint();
 
@@ -123,34 +125,33 @@ public class Game extends JFrame {
 			System.out.println("F5 pressed");
 	}
 
-	public void keyReleased(KeyEvent event) {
-		// TODO Auto-generated method stub
-	}
-
-	void keyTyped(KeyEvent event) {
+	void KeyTyped(KeyEvent event) {
 		if (event.getKeyCode() == KeyEvent.VK_LEFT) {
 			player.setDirection('L');
+			player.move();
 		}
 		if (event.getKeyCode() == KeyEvent.VK_UP) {
 			player.setDirection('U');
+			player.move();
 		}
 		if (event.getKeyCode() == KeyEvent.VK_DOWN) {
 			player.setDirection('D');
+			player.move();
 		}
 		if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
 			player.setDirection('R');
+			player.move();
 		}
 	}
 
 	public static void main(String args[]) throws Exception {
 
-			try {
-				Login window = new Login();
-				window.open();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		
+		try {
+			Login window = new Login();
+			window.open();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		Game game = new Game();
 		game.setTitle("Monster Chase");
@@ -159,6 +160,36 @@ public class Game extends JFrame {
 		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		game.setVisible(true);
 		game.play();
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent event) {
+		if (event.getKeyCode() == KeyEvent.VK_W) {
+			System.out.println("w");
+		}
+		if (event.getKeyCode() == KeyEvent.VK_LEFT) {
+			player.setDirection('L');
+			player.move();
+		}
+		if (event.getKeyCode() == KeyEvent.VK_UP) {
+			player.setDirection('U');
+			player.move();
+		}
+		if (event.getKeyCode() == KeyEvent.VK_DOWN) {
+			player.setDirection('D');
+			player.move();
+		}
+		if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
+			player.setDirection('R');
+			player.move();
+		}
 
 	}
 }
